@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Processing Page</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
+	      integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+</head>
+
+<body>
+
+<main class="container py-5">
+
+	<form class="row justify-content-center">
+
+		<div class="form-group col-12 col-md-10 col-xl-8">
+			<label for="inputData">Input array of data</label>
+			<textarea class="form-control" id="inputData" aria-describedby="inputDataHelp" rows="5"></textarea>
+			<span id="inputDataHelp" class="form-text text-muted">Example input [{ "state": "processing" }, { "state": "error" }]</span>
+		</div>
+
+		<div class="form-group col-12 col-md-10 col-xl-8">
+			<button type="button" id="submitData" class="btn btn-primary">Submit</button>
+		</div>
+
+	</form>
+
+	<pre id="results"></pre>
+</main>
+
+<script src="index.js"></script>
+
+</body>
+
+</html>
