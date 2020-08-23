@@ -25,14 +25,10 @@ const msDelay = 2000
 const waitFor = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 // process error state
-const processError = (errorCode) => {
-	appendJSON(errorResponse[errorCode])
-}
+const processError = (errorCode) => errorResponse[errorCode]
 
 // process success state
-const processSuccess = (successCode) => {
-	appendJSON(successResponse[successCode])
-}
+const processSuccess = (successCode) => successResponse[successCode]
 
 // print output JSON
 const appendJSON = (output) => {
@@ -47,43 +43,47 @@ const processData = async (data) => {
 				await waitFor(msDelay)
 				break
 			case stateCodes.error:
-				processError(item['errorCode'])
+				appendJSON(processError(item['errorCode']))
 				break
 			case stateCodes.success:
-				processSuccess(item['successCode'])
+				appendJSON(processSuccess(item['successCode']))
 				break
 			default:
 				throw 'The data entered does not correspond to the documentation!'
 		}
 	}
+	return 'Data processing completed'
 }
 
 
 const getProcessingPage = async (data) => {
 
-	resultsBlockSelector.innerHTML = ''
-
 	if (Array.isArray(data)) {
 		try {
-			await processData(data).then(r => console.log('all done'))
+			return await processData(data).then(response => response)
 		} catch (error) {
 			alert(error)
 		}
-
 	}
 
 }
 
 const processForm = () => {
+	// Resetting output from earlier messages
+	resultsBlockSelector.innerHTML = ''
+	// Define replace for converting input
 	const searchRegExp = /'/g;
 	const replaceWith = '"';
 
 	let value = document.getElementById(inputData).value.trim()
+
 	if (value) {
+		// Converting input
 		value = value.replace(searchRegExp, replaceWith)
+
 		try {
 			let inputData = (JSON.parse(value))
-			getProcessingPage(inputData)
+			getProcessingPage(inputData).then(response => console.log(response))
 		} catch (error) {
 			alert("Please, check your syntax. \n" + error)
 		}
